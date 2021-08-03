@@ -1,5 +1,8 @@
 '
-' Batch forward emails from defined mail boxes to an external email account.
+' Batch forward emails from defined mail boxes to an external email account
+' =========================================================================
+'
+' This is an Excel macro, so just paste in VBA Excel to run.
 '
 ' This is done as an Excel macro to avoid blocking Outlook. If the same
 ' macro is run from within Outlook, it seems to block execution and 
@@ -26,21 +29,21 @@ Sub doit()
     Dim fromDate As Date
     Dim toDate As Date
     
-	' Emails received within this date range will be forwarded.
-	' This is done to reduce load if sending years of emails.
-	'
+    ' Emails received within this date range will be forwarded.
+    ' This is done to reduce load if sending years of emails.
+    '
     ' Running through the weekend using
     '   fromDate = "01.01.2010 00:00:00"
     '   toDate = "01.07.2021 00:00:00"
     fromDate = "01.01.2010 00:00:00"
     toDate = "01.07.2021 00:00:00"
     
-	' address to forward emails to
+    ' address to forward emails to
     emailTo = "user.name@emailserver.com"
     
-	' email boxes to be forwarded
-	' To find exactly which matches, some debugging is needed. To do that,
-	' just initialise `objNS` and see the contents of the array `objNS.Folders`
+    ' email boxes to be forwarded
+    ' To find exactly which matches, some debugging is needed. To do that,
+    ' just initialise `objNS` and see the contents of the array `objNS.Folders`
     Dim mailboxNames As Variant
     mailboxNames = Array( _
                    Array("user.name@company.com", "Sent Items"), _
@@ -87,7 +90,7 @@ Sub forward_all_mails(olFolder As Outlook.MAPIFolder, _
     WriteProgress "found " & numberEmails & " emails."
     WriteProgress ""
     
-	' set this to True for a dry run only counting emails.
+    ' set this to True for a dry run only counting emails.
     If False Then
         GoTo alldone
     End If
@@ -100,19 +103,19 @@ Sub forward_all_mails(olFolder As Outlook.MAPIFolder, _
                And Item.ReceivedTime <= toDate Then
                     i = i + 1
                     Dim oMail As Outlook.MailItem: Set oMail = Item
-					
-					' some email are sent without permission to forward.
+                    
+                    ' some email are sent without permission to forward.
                     If oMail.Permission = olDoNotForward Then
                         GoTo for_continue
                     End If
                     
                     Set objMail = oMail.Forward
                     objMail.To = emailTo
-					
-					' progress report to excel and to file
+                    
+                    ' progress report to excel and to file
                     WriteProgress "[" & i & "/" & numberEmails & "] Subject:" & oMail.Subject
                     Cells(4, 1) = i
-					
+                    
                     'objMail.Display  ' this would display the email window
                     objMail.Send
                     Sleep (2000)  ' wait a bit not to flood the Outbox
