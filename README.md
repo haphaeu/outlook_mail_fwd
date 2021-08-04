@@ -41,6 +41,8 @@ You'll need to change:
 
 ## Potentially unsafe attachments
 
+**Forget about the below, as it doesn't work**
+
 Note that emails with attachments often create a pop up message saying
 *"Are you sure you want to send potentially unsafe attachments?"*, which
 blocks the execution of the macro. 

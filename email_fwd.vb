@@ -12,12 +12,13 @@
 '
 ' Note that emails with attachments often create a pop up message saying
 ' "Are you sure you want to send potentially unsafe attachments?", which
-' blocks the execution of the macro. To prevent that, the following key 
-' has been added/modified in the registry:
-'
+' blocks the execution of the macro. 
+' As an attempt to prevent that, the following key has been added/modified 
+' in the registry: 
 '     HKCU\Software\Policies\Microsoft\Office\16.0\outlook\security
 '     DontPromptLevel1AttachSend (REG_DWORD) = 0
-'
+' However it didn't work...
+' 
 
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
